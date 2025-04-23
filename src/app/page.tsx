@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
+import { Trash2 } from "lucide-react";
 
 type Task = {
   _id: string;
@@ -124,8 +125,8 @@ export default function Home() {
             {filteredTasks.map((task, index) => (
               <TableRow key={task._id}>
                 <TableCell>{index + 1}</TableCell>
-                <TableCell className={task.completed ? "line-through text-gray-400" : ""}>{task.title}</TableCell>
-                <TableCell className={task.completed ? "line-through text-gray-400" : ""}>{task.description}</TableCell>
+                <TableCell>{task.title}</TableCell>
+                <TableCell>{task.description}</TableCell>
                 <TableCell>{new Date(task.createdAt).toLocaleString()}</TableCell>
                 <TableCell>
                   <Badge variant={task.completed ? "default" : "secondary"}>
@@ -133,13 +134,15 @@ export default function Home() {
                   </Badge>
                 </TableCell>
                 <TableCell className="flex gap-2">
+                {!task.completed && (
                   <Button variant="outline" size="sm" onClick={() => toggleComplete(task._id, task.completed)}>
-                    {task.completed ? "Mark Pending" : "Mark Complete"}
+                    Mark Complete
                   </Button>
+                 )}
                   <Dialog>
                     <DialogTrigger asChild>
                       <Button variant="destructive" size="sm" onClick={() => setDeleteId(task._id)}>
-                        Delete
+                        <Trash2 />
                       </Button>
                     </DialogTrigger>
                     <DialogContent>
